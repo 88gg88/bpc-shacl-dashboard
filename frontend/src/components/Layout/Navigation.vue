@@ -60,7 +60,14 @@ const buttonClicked = (viewName) => {
         <v-btn text class="button-text-wrap blue-btn">Constraints View</v-btn>
       </router-link>
     </v-list-item> -->
-
+    <v-list-item> 
+      <router-link :to="'/class-view'" @click.native="buttonClicked('Class View')"> 
+        <v-btn text class="button-text-wrap blue-btn">Class View</v-btn> 
+      </router-link> </v-list-item> 
+    <v-list-item> 
+      <router-link :to="'/path-view'" @click.native="buttonClicked('Path View')"> 
+        <v-btn text class="button-text-wrap blue-btn">Path View</v-btn> 
+      </router-link> </v-list-item>
     <v-list-item>
       <router-link :to="'/'" @click.native="buttonClicked('LandingPage')">
         <v-btn text class="button-text-wrap blue-btn">Log out</v-btn>

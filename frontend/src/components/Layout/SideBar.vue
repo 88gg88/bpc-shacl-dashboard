@@ -80,6 +80,8 @@ const sidebarWidth = ref(60);
 const menuItems = [
   { name: 'Home', label: 'Home', icon: faHome, route: '/' },
   { name: 'Shape View', label: 'Shapes', icon: faShapes, route: '/shapes' },
+  { name: 'Class View', label: 'Class View', icon: faProjectDiagram, route: '/class-view' }, 
+  { name: 'Path View', label: 'Path View', icon: faRoute, route: '/path-view' },
   { name: 'About Us', label: 'About Us', icon: faInfo, route: '/about-us' }
 ];
 
