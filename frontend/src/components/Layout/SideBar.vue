@@ -80,19 +80,12 @@ const sidebarWidth = ref(60);
 const menuItems = [
   { name: 'Home', label: 'Home', icon: faHome, route: '/' },
   { name: 'Shape View', label: 'Shapes', icon: faShapes, route: '/shapes' },
-  { name: 'Class View', label: 'Class View', icon: faProjectDiagram, route: '/class-view' }, 
-  { name: 'Path View', label: 'Path View', icon: faRoute, route: '/path-view' },
+  { name: 'Focus Node View', label: 'Focus Nodes', icon: faProjectDiagram, route: '/focus-nodes' },
+  { name: 'Class View', label: 'Class View', icon: faPowerOff, route: '/classes' },
+  { name: 'Property Path View', label: 'Property Paths', icon: faRoute, route: '/property-paths' },
+  { name: 'Constraint View', label: 'Constraints', icon: faPuzzlePiece, route: '/constraints' },
   { name: 'About Us', label: 'About Us', icon: faInfo, route: '/about-us' }
 ];
-
-// const menuItems = [
-//   { name: 'Home', label: 'Home', icon: faHome, route: '/' },
-//   { name: 'Shape View', label: 'Shapes', icon: faShapes, route: '/shapes' },
-//   { name: 'Focus Node View', label: 'Focus Nodes', icon: faProjectDiagram, route: '/focus-nodes' },
-//   { name: 'Property Path View', label: 'Property Paths', icon: faRoute, route: '/property-paths' },
-//   { name: 'Constraint View', label: 'Constraints', icon: faPuzzlePiece, route: '/constraints' },
-//   { name: 'About Us', label: 'About Us', icon: faInfo, route: '/about-us' }
-// ];
 
 
 const buttonClicked = (viewName, navigate) => {

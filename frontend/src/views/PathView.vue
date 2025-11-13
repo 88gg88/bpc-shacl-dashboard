@@ -1,1 +1,0 @@
-<template><p>Path View</p></template>

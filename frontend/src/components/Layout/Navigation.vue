@@ -49,25 +49,21 @@ const buttonClicked = (viewName) => {
       <router-link :to="'/focus-nodes'" @click.native="buttonClicked('Focus Node View')">
         <v-btn text class="button-text-wrap blue-btn">Focus Nodes View</v-btn>
       </router-link>
-    </v-list-item>
+    </v-list-item> -->
     <v-list-item>
       <router-link :to="'/property-paths'" @click.native="buttonClicked('Property Path View')">
         <v-btn text class="button-text-wrap blue-btn">Property Paths View</v-btn>
       </router-link>
     </v-list-item>
-    <v-list-item>
+    <!-- <v-list-item>
       <router-link :to="'/constraints'" @click.native="buttonClicked('Constraint View')">
         <v-btn text class="button-text-wrap blue-btn">Constraints View</v-btn>
       </router-link>
     </v-list-item> -->
     <v-list-item> 
-      <router-link :to="'/class-view'" @click.native="buttonClicked('Class View')"> 
+      <router-link :to="'/classes'" @click.native="buttonClicked('Class View')"> 
         <v-btn text class="button-text-wrap blue-btn">Class View</v-btn> 
       </router-link> </v-list-item> 
-    <v-list-item> 
-      <router-link :to="'/path-view'" @click.native="buttonClicked('Path View')"> 
-        <v-btn text class="button-text-wrap blue-btn">Path View</v-btn> 
-      </router-link> </v-list-item>
     <v-list-item>
       <router-link :to="'/'" @click.native="buttonClicked('LandingPage')">
         <v-btn text class="button-text-wrap blue-btn">Log out</v-btn>

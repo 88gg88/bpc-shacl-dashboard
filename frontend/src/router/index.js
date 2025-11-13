@@ -31,11 +31,11 @@ import ConstraintOverview from "@/components/Overviews/ConstraintOverview.vue";
 import ConstraintView from "@/components/Views/ConstraintView.vue";
 import FocusNodeOverview from "@/components/Overviews/FocusNodeOverview.vue";
 import FocusNodeView from "@/components/Views/FocusNodeView.vue";
-import PropertyPathOverview from "@/components/Overviews/PropertyPathOverview.vue";
 import PropertyPathView from "@/components/Views/PropertyPathView.vue";
+import PropertyPathOverview from "@/components/Overviews/PropertyPathOverview.vue";
 import AboutUs from "@/components/Overviews/AboutUs.vue";
-import ClassView from "@/views/ClassView.vue"; 
-import PathView from "@/views/PathView.vue";
+import ClassDetailedView from "@/components/Views/ClassDetailedView.vue";;
+import ClassOverview from "@/components/Overviews/ClassOverview.vue";;
 
 const routes = [
   //{ path: "/", name: "LandingPage", component: LandingPage }, // Landing page route
@@ -49,8 +49,8 @@ const routes = [
   { path: "/property-paths", name: "PropertyPathOverview", component: PropertyPathOverview },
   { path: "/property-paths/:pathId", name: "PropertyPathView", component: PropertyPathView },
   { path: "/about-us", name: "AboutUs", component: AboutUs }, 
-  { path: "/class-view", name: "ClassView", component: ClassView }, 
-  { path: "/path-view", name: "PathView", component: PathView },
+  { path: "/classes", name: "ClassOverview", component: ClassOverview },
+  { path: "/classes/:classId", name: "ClassDetailedView", component: ClassDetailedView },
 ];
 
 // Create the router instance
