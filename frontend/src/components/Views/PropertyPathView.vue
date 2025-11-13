@@ -19,15 +19,30 @@
         </div>
       </div>
     </div>
+<div class="main-content space-y-6">
 
-    <div class="main-content space-y-6">
-      <div class="key-metrics grid grid-cols-4 gap-4">
-        <Metrics />
-      </div>
-
-      <div class="plots-section grid grid-cols-3 gap-4">
+      <div class="key-metrics grid grid-cols-3 gap-4">
         <div class="plot bg-gray-100 p-4 rounded">
-          <h3 class="text-md font-medium">1. Violation Distribution</h3>
+          <h3 class="text-md font-medium">1. Path Occurrence Frequency</h3>
+
+          <table class="table-auto w-full text-left border-collapse border border-gray-300">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="border border-gray-300 px-4 py-2">Shape</th>
+                <th class="border border-gray-300 px-4 py-2">Occurrences</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(row, i) in occurrenceTable" :key="i" class="hover:bg-gray-50">
+                <td class="border border-gray-300 px-4 py-2">{{ row.shape }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ row.count }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="plot bg-gray-100 p-4 rounded">
+          <h3 class="text-md font-medium">2. Distribution of Violations</h3>
           <BarChart
             :title="'Violation Distribution'"
             :xAxisLabel="'Focus Nodes'"
@@ -35,8 +50,32 @@
             :data="violationDistributionData"
           />
         </div>
+
         <div class="plot bg-gray-100 p-4 rounded">
-          <h3 class="text-md font-medium">2. Path Type Breakdown</h3>
+          <h3 class="text-md font-medium">3. Example Triples</h3>
+
+          <table class="table-auto w-full text-left border-collapse border border-gray-300">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="border border-gray-300 px-4 py-2">Shape</th>
+                <th class="border border-gray-300 px-4 py-2">Constraint</th>
+                <th class="border border-gray-300 px-4 py-2">Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(row, i) in exampleTriples" :key="i" class="hover:bg-gray-50">
+                <td class="border border-gray-300 px-4 py-2">{{ row.shape }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ row.constraint }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ row.count }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="plots-section grid grid-cols-3 gap-4">
+        <div class="plot bg-gray-100 p-4 rounded">
+          <h3 class="text-md font-medium">4. Path Type Breakdown</h3>
           <BarChart
             :title="'Path Type Breakdown'"
             :xAxisLabel="'Property Path Types'"
@@ -44,85 +83,79 @@
             :data="pathTypeData"
           />
         </div>
-        <div class="plot bg-gray-100 p-4 rounded">
-          <h3 class="text-md font-medium">3. Violation Examples</h3>
-          <ViolationExamplesChart
-            :title="'Example Violations'"
-            :data="violationExamplesData"
-          />
-        </div>
-      </div>
-    </div>
 
-    <div class="bottom-section bg-gray-100 p-4 rounded mt-6">
-      <h2 class="text-lg font-semibold mb-4">List of Violations</h2>
-      <table class="table-auto w-full text-left border-collapse border border-gray-300">
-        <thead class="bg-gray-200">
-          <tr>
-            <th class="border border-gray-300 px-4 py-2">Focus Node</th>
-            <th class="border border-gray-300 px-4 py-2">Property Path</th>
-            <th class="border border-gray-300 px-4 py-2">Constraint</th>
-            <th class="border border-gray-300 px-4 py-2">Message</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="violation in violations" :key="violation.id" class="hover:bg-gray-50">
-            <td class="border border-gray-300 px-4 py-2">{{ violation.focusNode }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ violation.propertyPath }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ violation.constraint }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ violation.message }}</td>
-          </tr>
-        </tbody>
-      </table>
+        <div class="plot bg-gray-100 p-4 rounded">
+          <h3 class="text-md font-medium">5. Violation Examples</h3>
+
+          <table class="table-auto w-full text-left border-collapse border border-gray-300">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="border border-gray-300 px-4 py-2">Focus Node</th>
+                <th class="border border-gray-300 px-4 py-2">Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(v, i) in violationExamplesData" :key="i" class="hover:bg-gray-50">
+                <td class="border border-gray-300 px-4 py-2">{{ v.focusNode }}</td>
+                <td class="border border-gray-300 px-4 py-2">{{ v.message }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div></div>
+      </div>
+
+      <div class="bottom-section bg-gray-100 p-4 rounded mt-6">
+        <h2 class="text-lg font-semibold mb-4">List of Violations</h2>
+
+        <table class="table-auto w-full text-left border-collapse border border-gray-300">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="border border-gray-300 px-4 py-2">Focus Node</th>
+              <th class="border border-gray-300 px-4 py-2">Property Path</th>
+              <th class="border border-gray-300 px-4 py-2">Constraint</th>
+              <th class="border border-gray-300 px-4 py-2">Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="v in violations" :key="v.id" class="hover:bg-gray-50">
+              <td class="border border-gray-300 px-4 py-2">{{ v.focusNode }}</td>
+              <td class="border border-gray-300 px-4 py-2">{{ v.propertyPath }}</td>
+              <td class="border border-gray-300 px-4 py-2">{{ v.constraint }}</td>
+              <td class="border border-gray-300 px-4 py-2">{{ v.message }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </div>
 </template>
 
 <script setup>
-/**
- * PropertyPathView component
- *
- * Detailed view for a specific SHACL property path.
- * Displays path information, metrics, visualizations, and associated violations.
- *
- * @example
- * // Basic usage in router view:
- * // <router-view /> with route to PropertyPathView with path ID parameter
- *
- * @dependencies
- * - vue (Composition API)
- * - vue-router - For navigation and route parameter access
- * - ../PropertyPathView/Metrics.vue
- * - ../Charts/BarChart.vue
- * - ../Charts/ViolationExamplesChart.vue
- *
- * @features
- * - Property path type and metadata display
- * - Key metrics dashboard
- * - Visualization charts for violation distribution and examples
- * - Comprehensive violations table
- *
- * @style
- * - Clean layout with distinct sections
- * - Color-coded information for visual differentiation
- * - Responsive grid system for metrics and charts
- * 
- * @returns {HTMLElement} A detailed dashboard page for property paths, containing a header with
- * back navigation and path metadata, key metrics in a card layout, three visualization charts
- * showing distribution data, and a comprehensive violations table listing all violations.
- */
-import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import Metrics from "./../PropertyPathView/Metrics.vue";
-import BarChart from './../Charts/BarChart.vue';
-import ViolationExamplesChart from './../Charts/ViolationExamplesChart.vue';
+import { ref, onMounted } from "vue"
+import { useRoute, useRouter } from "vue-router"
+import BarChart from './../Charts/BarChart.vue'
+import ViolationExamplesChart from './../Charts/ViolationExamplesChart.vue'
+const route = useRoute()
+const router = useRouter()
 
-const route = useRoute();
-const router = useRouter();
+const propertyPath = ref("")
+const pathType = ref("")
+const totalViolations = ref(0)
 
-const propertyPath = ref("");
-const pathType = ref("");
-const totalViolations = ref(0);
+const occurrenceTable = ref([
+  { shape: 'shs:StadiumShape', count: 3 },
+  { shape: 'shs:AmphibianShape', count: 2 },
+  { shape: 'shs:ComicStripShape', count: 4 }
+])
+
+const exampleTriples = ref([
+  { shape: 'shs:StadiumShape', constraint: 'sh:InConstraintComponent', count: 2379 },
+  { shape: 'shs:AmphibianShape', constraint: 'sh:InConstraintComponent', count: 729 },
+  { shape: 'shs:ComicStripShape', constraint: 'sh:InConstraintComponent', count: 718 }
+])
 
 const violationDistributionData = ref({
   labels: ['Node 1', 'Node 2', 'Node 3'],
@@ -130,12 +163,12 @@ const violationDistributionData = ref({
     {
       label: 'Violations',
       data: [12, 5, 8],
-      backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(75, 192, 192, 0.2)'],
-      borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(75, 192, 192, 1)'],
-      borderWidth: 1,
-    },
-  ],
-});
+      backgroundColor: ['rgba(54,162,235,0.2)'],
+      borderColor: ['rgba(54,162,235,1)'],
+      borderWidth: 1
+    }
+  ]
+})
 
 const pathTypeData = ref({
   labels: ['Datatype Property', 'Object Property', 'Annotation Property'],
@@ -143,39 +176,41 @@ const pathTypeData = ref({
     {
       label: 'Violations',
       data: [10, 20, 5],
-      backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 205, 86, 0.2)'],
-      borderColor: ['rgba(255, 159, 64, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 205, 86, 1)'],
-      borderWidth: 1,
-    },
-  ],
-});
+      backgroundColor: ['rgba(54,162,235,0.2)'],
+      borderColor: ['rgba(54,162,235,1)'],
+      borderWidth: 1
+    }
+  ]
+})
 
 const violationExamplesData = ref([
   { focusNode: "Node 1", message: "Missing value for foaf:age" },
-  { focusNode: "Node 2", message: "Invalid datatype for foaf:name" },
-]);
+  { focusNode: "Node 2", message: "Invalid datatype for foaf:name" }
+])
 
 const violations = ref([
   { id: 1, focusNode: "http://example.com/123", propertyPath: "foaf:age", constraint: "sh:minCount", message: "Min count not met" },
-  { id: 2, focusNode: "http://example.com/456", propertyPath: "foaf:name", constraint: "sh:datatype", message: "Invalid datatype" },
-]);
+  { id: 2, focusNode: "http://example.com/456", propertyPath: "foaf:name", constraint: "sh:datatype", message: "Invalid datatype" }
+])
 
 onMounted(() => {
-  const pathId = route.params.pathId;
+  const id = route.params.pathId
   const pathData = {
     1: { path: "book:hasAuthor", type: "IRI", violations: 10 },
     2: { path: "book:hasTitle", type: "Literal", violations: 5 },
-    3: { path: "book:publishedBy", type: "IRI", violations: 2 },
-  }[pathId];
+    3: { path: "book:publishedBy", type: "IRI", violations: 2 }
+  }[id]
 
   if (pathData) {
-    propertyPath.value = pathData.path;
-    pathType.value = pathData.type;
-    totalViolations.value = pathData.violations;
+    propertyPath.value = pathData.path
+    pathType.value = pathData.type
+    totalViolations.value = pathData.violations
   }
-});
-
+})
 const goBack = () => {
-  router.push({ name: "PropertyPathOverview" });
-};
+  router.push({ name: "PropertyPathOverview" })
+}
 </script>
+<style scoped>
+.text-primary { color: #1565c0; }
+</style>

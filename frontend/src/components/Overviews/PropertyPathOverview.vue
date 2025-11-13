@@ -1,6 +1,5 @@
 <template>
   <div class="propertypath-overview p-4">
-    <!-- Tags Section -->
     <div class="grid grid-cols-4 gap-4 mb-4">
       <div
         v-for="(tag, index) in tags"
@@ -17,7 +16,6 @@
       </div>
     </div>
 
-    <!-- Plots Section -->
     <div class="grid grid-cols-3 gap-4 mb-4">
       <HistogramChart
           :title="'Property Path Depth Distribution'"
@@ -39,7 +37,6 @@
         />
     </div>
 
-    <!-- Table Section -->
     <div class="bg-white border border-gray-200 p-6 rounded-lg shadow-lg">
       <h2 class="text-2xl font-bold text-gray-700 mb-4">Property Path Details</h2>
       <table class="w-full border-collapse">
