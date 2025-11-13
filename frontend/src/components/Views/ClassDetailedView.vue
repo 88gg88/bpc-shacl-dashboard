@@ -3,8 +3,6 @@
     <button @click="goBack" class="bg-blue-500 text-white px-4 py-2 rounded mb-4">
       Back to Overview
     </button>
-
-    <!-- Header -->
     <div class="header-section mb-6">
       <h1 class="text-2xl font-bold mb-2 text-primary">Class: {{ className }}</h1>
       <div class="header-content flex justify-between items-center bg-gray-100 p-4 rounded">
@@ -24,11 +22,8 @@
         </div>
       </div>
     </div>
-
-    <!-- Metric Sections -->
     <div class="main-content space-y-6">
       <div class="key-metrics grid grid-cols-2 gap-4">
-        <!-- Violations per Instance -->
         <div class="metric-card bg-white shadow rounded p-4 flex flex-col justify-between">
           <h3 class="text-lg font-semibold mb-2">Violations per Instance</h3>
           <BarChart
@@ -39,7 +34,7 @@
           />
         </div>
 
-        <!-- Constraint Satisfaction -->
+
         <div class="metric-card bg-white shadow rounded p-4 flex flex-col justify-between">
           <h3 class="text-lg font-semibold mb-2">Constraint Satisfaction</h3>
           <BarChart
@@ -51,7 +46,6 @@
         </div>
       </div>
 
-      <!-- Example Instances -->
       <div class="metric-card bg-white shadow rounded p-4">
         <h3 class="text-lg font-semibold mb-3">Example Instances</h3>
         <ul class="text-sm text-blue-500">
@@ -61,7 +55,6 @@
         </ul>
       </div>
 
-      <!-- Constraint Definitions -->
       <div class="metric-card bg-white shadow rounded p-4">
         <h3 class="text-lg font-semibold mb-3">Constraint Definitions</h3>
         <ul class="text-sm text-blue-500">
@@ -84,7 +77,6 @@ const className = ref('')
 const totalInstances = ref(120)
 const totalViolations = ref(25)
 const satisfactionRate = ref(72)
-
 const violationDistributionData = ref({
   labels: ['Instance 1', 'Instance 2', 'Instance 3', 'Instance 4'],
   datasets: [
@@ -97,7 +89,6 @@ const violationDistributionData = ref({
     }
   ]
 })
-
 const constraintSatisfactionData = ref({
   labels: ['Satisfied', 'Violated'],
   datasets: [
@@ -123,7 +114,6 @@ const constraintDefinitions = ref([
   'sh:maxCount --> No more than 3 values allowed',
   'sh:class --> Must belong to dbo:Place'
 ])
-
 onMounted(() => {
   const classId = route.params.classId
   if (classId) className.value = classId
@@ -133,7 +123,6 @@ const goBack = () => {
   router.push({ name: 'ClassOverview' })
 }
 </script>
-
 <style scoped>
 .metric-card {
   background-color: white;
