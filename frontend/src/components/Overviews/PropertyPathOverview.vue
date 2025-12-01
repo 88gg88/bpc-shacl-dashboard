@@ -1,5 +1,6 @@
 <template>
   <div class="propertypath-overview p-4">
+    <!-- Tags Section -->
     <div class="grid grid-cols-4 gap-4 mb-4">
       <div
         v-for="(tag, index) in tags"
@@ -16,6 +17,7 @@
       </div>
     </div>
 
+    <!-- Plots Section -->
     <div class="grid grid-cols-3 gap-4 mb-4">
       <HistogramChart
           :title="'Property Path Depth Distribution'"
@@ -37,20 +39,28 @@
         />
     </div>
 
+    <!-- Table Section -->
     <div class="bg-white border border-gray-200 p-6 rounded-lg shadow-lg">
       <h2 class="text-2xl font-bold text-gray-700 mb-4">Property Path Details</h2>
       <table class="w-full border-collapse">
         <thead class="bg-gray-200">
           <tr>
-            <th class="text-left px-6 py-3 border-b border-gray-300 text-gray-600 font-medium">Property Path</th>
-            <th class="text-left px-6 py-3 border-b border-gray-300 text-gray-600 font-medium">Path Type</th>
-            <th class="text-left px-6 py-3 border-b border-gray-300 text-gray-600 font-medium">Description</th>
+            <th
+              v-for="(column, index) in columns"
+              :key="index"
+              class="text-left px-6 py-3 border-b border-gray-300 text-gray-600 font-medium cursor-pointer"
+              @click="sortColumn(column)">
+              {{ column.label }}
+              <span class="sort-indicator" >
+                {{ sortKey === column.field ? (sortOrder === 'asc' ? ' ▲' : ' ▼') : '' }}
+              </span>
+            </th>
             <th class="text-center px-6 py-3 border-b border-gray-300 text-gray-600 font-medium"></th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="propertyPath in propertyPaths"
+            v-for="propertyPath in sortedPaginatedData"
             :key="propertyPath.id"
             class="even:bg-gray-50 hover:bg-blue-50 transition-colors"
             @click="goToPropertyPath(propertyPath)"
@@ -111,8 +121,8 @@
  * - Responsive layout with cards and data tables.
  * - Data visualization components for property path statistics.
  * - Filterable and sortable property path listings.
- * 
- * @returns {HTMLElement} A dashboard page showing property path statistics in summary cards at 
+ *
+ * @returns {HTMLElement} A dashboard page showing property path statistics in summary cards at
  * the top, three data visualizations (histogram, bar chart, and box plot) in the middle, and a
  * paginated data table listing all property paths with their types and descriptions at the bottom.
  */
@@ -174,6 +184,35 @@ const paginatedData = computed(() => {
   return propertyPaths.value.slice(start, start + pageSize.value);
 });
 
+const sortedPaginatedData = computed(() => {
+  const data = paginatedData.value;
+  if (sortKey.value) {
+    return [...data].sort((a, b) => {
+      const result = a[sortKey.value].toString().localeCompare(b[sortKey.value].toString(), undefined, { numeric: true });
+      return sortOrder.value === "asc" ? result : -result;
+    });
+  }
+  return data;
+});
+
+const sortKey = ref("");
+const sortOrder = ref("asc");
+
+const columns = ref([
+  { label: "Property Path", field: "path"},
+  { label: "Path Type", field: "type"},
+  { label: "Description", field: "description"}
+])
+
+const sortColumn = (column) => {
+  if (sortKey.value === column.field) {
+    sortOrder.value = sortOrder.value === "asc" ? "desc" : "asc";
+  } else {
+    sortKey.value = column.field;
+    sortOrder.value = "asc";
+  }
+};
+
 const prevPage = () => {
   if (currentPage.value > 1) currentPage.value--;
 };
@@ -183,7 +222,7 @@ const nextPage = () => {
 };
 
 const goToPropertyPath = (propertyPath) => {
-  router.push({ name: 'PropertyPathView', params: { pathId: propertyPath.id } });
+  router.push({ name: 'PropertyPathView', params: { path: propertyPath.path } });
 };
 </script>
 

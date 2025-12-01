@@ -1,9 +1,9 @@
 /**
  * Router Configuration
- * 
+ *
  * Defines all routes for the SHACL Dashboard application.
  * Handles navigation between different views and components.
- * 
+ *
  * Routes include:
  * - Home (MainContent)
  * - Shape overview and detailed views
@@ -11,11 +11,11 @@
  * - Focus Node overview and detailed views
  * - Property Path overview and detailed views
  * - About Us page
- * 
+ *
  * @dependencies
  * - vue-router
  * - Component imports from across the application
- * 
+ *
  * @returns {VueRouter} A configured Vue Router instance with history mode enabled
  * and all application routes defined, ready for integration with the Vue application.
  */
@@ -47,8 +47,8 @@ const routes = [
   { path: "/focus-nodes", name: "FocusNodeOverview", component: FocusNodeOverview },
   { path: "/focus-nodes/:focusNodeId", name: "FocusNodeView", component: FocusNodeView },
   { path: "/property-paths", name: "PropertyPathOverview", component: PropertyPathOverview },
-  { path: "/property-paths/:pathId", name: "PropertyPathView", component: PropertyPathView },
-  { path: "/about-us", name: "AboutUs", component: AboutUs }, 
+  { path: "/property-paths/:path", name: "PropertyPathView", component: PropertyPathView },
+  { path: "/about-us", name: "AboutUs", component: AboutUs },
   { path: "/classes", name: "ClassOverview", component: ClassOverview },
   { path: "/classes/:classId", name: "ClassDetailedView", component: ClassDetailedView },
 ];

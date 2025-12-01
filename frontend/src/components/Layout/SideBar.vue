@@ -1,12 +1,12 @@
 <template>
-  <div 
-    class="sidebar" 
-    @mouseenter="isExpanded = true" 
+  <div
+    class="sidebar"
+    @mouseenter="isExpanded = true"
     @mouseleave="isExpanded = false"
   >
     <ul class="menu-list">
       <li v-for="item in menuItems" :key="item.name">
-        <router-link 
+        <router-link
           :to="item.route"
           custom
           v-slot="{ navigate }"
@@ -16,10 +16,10 @@
             :class="{ active: activeView === item.name }"
             class="menu-item"
           >
-            <FontAwesomeIcon 
-              :icon="item.icon" 
-              class="menu-icon" 
-              :class="{ 'active-icon': activeView === item.name }" 
+            <FontAwesomeIcon
+              :icon="item.icon"
+              class="menu-icon"
+              :class="{ 'active-icon': activeView === item.name }"
             />
             <span v-if="isExpanded" class="menu-text">{{ item.label }}</span>
           </div>
@@ -61,7 +61,7 @@
  * - Vertical navigation panel with fixed or flexible width.
  * - Contains styling for navigation links and nested menus.
  * - Often includes collapsible functionality for responsive design.
- * 
+ *
  * @returns {HTMLElement} A collapsible sidebar navigation menu that expands on hover,
  * featuring menu items with icons and text labels for different application views,
  * highlighting the currently active item and providing smooth transitions between states.
@@ -80,10 +80,10 @@ const sidebarWidth = ref(60);
 const menuItems = [
   { name: 'Home', label: 'Home', icon: faHome, route: '/' },
   { name: 'Shape View', label: 'Shapes', icon: faShapes, route: '/shapes' },
-  { name: 'Focus Node View', label: 'Focus Nodes', icon: faProjectDiagram, route: '/focus-nodes' },
-  { name: 'Class View', label: 'Class View', icon: faPowerOff, route: '/classes' },
+  // { name: 'Focus Node View', label: 'Focus Nodes', icon: faProjectDiagram, route: '/focus-nodes' },
+  { name: 'Class View', label: 'Classes', icon: faPowerOff, route: '/classes' },
   { name: 'Property Path View', label: 'Property Paths', icon: faRoute, route: '/property-paths' },
-  { name: 'Constraint View', label: 'Constraints', icon: faPuzzlePiece, route: '/constraints' },
+  // { name: 'Constraint View', label: 'Constraints', icon: faPuzzlePiece, route: '/constraints' },
   { name: 'About Us', label: 'About Us', icon: faInfo, route: '/about-us' }
 ];
 
