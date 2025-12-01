@@ -28,7 +28,7 @@
     <!-- Collapsible Constraint Defintion -->
     <transition name="fade">
       <div v-if="showDefinition" class="bg-gray-50 p-6 rounded-xl mb-8 shadow">
-        <h3 class="text-lg font-semibold text-gray-800 mb-4">Constraints Applied to This Path</h3>
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Constraints applied to this Path</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div
             v-for="c in constraintDefinition"

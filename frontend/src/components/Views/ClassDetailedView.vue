@@ -59,7 +59,7 @@
             <p class="text-4xl font-bold text-red-600 mt-2">{{ violatingInstances }}</p>
           </div>
           <div class="text-right">
-            <p class="text-xs text-gray-500">Most affected</p>
+            <p class="text-xs text-gray-500">most affected</p>
             <p class="text-lg font-semibold text-orange-600">{{ mostViolatedInstance || '—' }}</p>
           </div>
         </div>
@@ -72,7 +72,7 @@
             <p class="text-4xl font-bold text-gray-800 mt-2">{{ violatedPropertiesCount }}</p>
           </div>
           <div class="text-right">
-            <p class="text-xs text-gray-500">Most violated path</p>
+            <p class="text-xs text-gray-500">most violated path</p>
             <p class="text-lg font-semibold text-orange-600">{{ mostViolatedProperty || '—' }}</p>
           </div>
         </div>
@@ -85,7 +85,7 @@
             <p class="text-4xl font-bold text-gray-800 mt-2">{{ triggeredConstraintsCount }}</p>
           </div>
           <div class="text-right">
-            <p class="text-xs text-gray-500">Most triggered</p>
+            <p class="text-xs text-gray-500">most triggered</p>
             <p class="text-lg font-semibold text-orange-600">{{ mostTriggeredConstraint || '—' }}</p>
           </div>
         </div>
