@@ -126,9 +126,9 @@ const tags = [
 
 // Mock data for the table
 const classes = ref([
-  { id: 1, classId: "dbo:StadiumShape", instances: 120, violations: 25, satisfaction: 80 },
-  { id: 2, classId: "dbo:ComicStripShape", instances: 98, violations: 12, satisfaction: 88 },
-  { id: 3, classId: "dbo:AmphibianShape", instances: 76, violations: 8, satisfaction: 90 },
+  { id: 1, classId: "dbo:Stadium", instances: 120, violations: 25, satisfaction: 80 },
+  { id: 2, classId: "dbo:ComicStrip", instances: 98, violations: 12, satisfaction: 88 },
+  { id: 3, classId: "dbo:Amphibian", instances: 76, violations: 8, satisfaction: 90 },
 ]);
 
 // Mock data for the charts
