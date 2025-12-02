@@ -121,7 +121,7 @@ const tags = [
   { title: "Total Classes", value: 25 },
   { title: "Avg Violations per Class", value: 5 },
   { title: "Avg Satisfaction Rate (%)", value: "72%" },
-  { title: "Most Violated Class", value: "StadiumShape" },
+  { title: "Most Violated Class", value: "Stadium" },
 ];
 
 // Mock data for the table
