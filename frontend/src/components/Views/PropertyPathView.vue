@@ -8,7 +8,6 @@
       >
         Back to Property Path Overview
       </button>
-
       <div class="flex flex-col items-center flex-grow text-center">
         <h1 class="text-2xl font-semibold text-gray-800">Property Path: {{ propertyPath }}</h1>
         <button
@@ -18,7 +17,6 @@
           {{ showDefinition ? 'Hide Definition' : 'Show Definition' }}
         </button>
       </div>
-
       <div class="w-[120px]"></div>
     </div>
 
@@ -48,7 +46,6 @@
         <h3 class="summary-title">Total Occurrences</h3>
         <p class="summary-value">{{ totalOccurrences }}</p>
       </div>
-
       <div class="summary-card">
         <div class="flex justify-between items-end">
           <div>
@@ -61,7 +58,6 @@
           </div>
         </div>
       </div>
-
       <div class="summary-card">
         <div class="flex justify-between items-end">
           <div>
@@ -74,7 +70,6 @@
           </div>
         </div>
       </div>
-
       <div class="summary-card">
         <div class="flex justify-between items-end">
           <div>
@@ -96,7 +91,6 @@
           All Triples with <code class="text-purple-600 font-mono">{{ propertyPath }}</code>
         </h2>
       </div>
-
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-100">
@@ -120,13 +114,11 @@
               <td class="px-6 py-4">
                 <code class="text-sm font-medium text-blue-700">{{ shortenIri(triple.subject) }}</code>
               </td>
-
               <td class="px-6 py-4 font-mono text-sm text-gray-800 max-w-md truncate">
                 <span v-if="triple.isIRI" class="text-purple-600">&lt;{{ triple.value }}&gt;</span>
                 <span v-else>"{{ triple.value }}"</span>
                 <span v-if="triple.datatype" class="text-xs text-gray-500 ml-1">^^ {{ triple.datatype }}</span>
               </td>
-
               <td class="px-6 py-4 text-center">
                 <span
                   :class="triple.violations.length === 0
@@ -139,7 +131,6 @@
                     : `${triple.violations.length} issue${triple.violations.length > 1 ? 's' : ''}` }}
                 </span>
               </td>
-
               <td class="px-6 py-4 text-sm">
                 <template v-if="triple.violations.length">
                   <ul class="space-y-1">

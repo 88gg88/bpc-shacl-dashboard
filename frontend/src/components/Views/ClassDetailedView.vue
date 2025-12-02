@@ -10,7 +10,6 @@
           Back to Class Overview
         </button>
       </div>
-
       <div class="flex flex-col items-center flex-grow text-center">
         <h1 class="text-2xl font-semibold text-gray-800">Class: {{ className }}</h1>
         <button
@@ -51,7 +50,6 @@
         <h3 class="summary-title">Total Instances</h3>
         <p class="summary-value">{{ totalInstances }}</p>
       </div>
-
       <div class="summary-card">
         <div class="flex justify-between items-end">
           <div>
@@ -64,7 +62,6 @@
           </div>
         </div>
       </div>
-
       <div class="summary-card">
         <div class="flex justify-between items-end">
           <div>
@@ -77,7 +74,6 @@
           </div>
         </div>
       </div>
-
       <div class="summary-card">
         <div class="flex justify-between items-end">
           <div>
@@ -99,7 +95,6 @@
           All Instances of <code class="text-blue-600 font-mono">{{ className }}</code>
         </h2>
       </div>
-
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-100">
@@ -132,7 +127,6 @@
                   </div>
                 </div>
               </td>
-
               <td class="px-6 py-4 text-center">
                 <span
                   :class="inst.violations.length === 0
@@ -145,7 +139,6 @@
                     : `${inst.violations.length} issue${inst.violations.length > 1 ? 's' : ''}` }}
                 </span>
               </td>
-
               <td class="px-6 py-4 text-sm">
                 <template v-if="inst.violations.length">
                   <ul class="space-y-1">
