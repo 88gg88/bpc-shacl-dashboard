@@ -6,7 +6,7 @@ A comprehensive visualization and analysis tool for SHACL validation results. SH
 
 ## Overview
 
-The SHACL Dashboard provides an interactive web interface for exploring and analyzing SHACL validation results. It connects to a Virtuoso RDF database containing SHACL shapes and validation reports, offering detailed statistics, visualizations, and insights into constraint violations.
+The SHACL Dashboard provides an interactive web interface for exploring and analyzing SHACL validation results. It connects to a Virtuoso RDF database containing SHACL shapes and validation reports, offering detailed statistics, visualizations, and insights into constraint violations. Analysis views dedicated for classes and property paths were designed and implemented.
 
 ## Key Features
 
@@ -15,6 +15,8 @@ The SHACL Dashboard provides an interactive web interface for exploring and anal
 - **Comprehensive Statistics**: View distributions and patterns in validation results
 - **RESTful API**: Access all validation data programmatically through the API
 - **Shape-Specific Analysis**: Dive deep into individual shape validation patterns
+- **Class Overview and Class Detailed View**: Analyze violations, constraints and example instances of classes
+- **Property Path Overview and Property Path Detailed View**: Analyze violations and occurence frequencies of paths and the constraints triggered
 
 ## Architecture
 
@@ -144,6 +146,16 @@ The SHACL Dashboard offers two main views:
    - Property shape breakdowns
    - Constraint component analysis
    - Detailed view of affected focus nodes
+
+3. **Class View**
+   - Overview of all classes in the dataset through summary charts such as instances, violations and satisfaction rates
+   - Statistics about total classes, average violations per class,average satisfaction rate and most violated class
+   - Detailed view for each class with violated properties, triggered constraints and instances with violations
+
+4. **Property View**
+   - Overview of all property paths in the dataset through summary charts such as property path depth distribution, type distribution and path usage distribution
+   - Statistics about total property paths, paths with descriptions, max/average path depth per property 
+   - Detailed view for each property path with total occurences, violating triples, unique subjects and triggered constraints
 
 Use the navigation menu to switch between these views.
 
