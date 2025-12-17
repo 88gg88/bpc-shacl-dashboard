@@ -25,6 +25,7 @@
     </div>
 
     <!-- Definition Toggle -->
+
     <transition name="fade">
       <section v-if="showDefinition" class="bg-gray-50 p-6 rounded-xl mb-8 shadow">
         <h3 class="text-lg font-semibold text-gray-800 mb-4">Active Constraint Types</h3>
@@ -87,7 +88,23 @@
         </div>
       </div>
     </div>
-
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10"> 
+    <BarChart 
+      :title="'Violations per Instance'" 
+      :xAxisLabel="'Instances'" 
+      :yAxisLabel="'Violations'" 
+      :data="violationsPerInstanceChart" /> 
+    <BarChart 
+      :title="'Violations per Property'" 
+      :xAxisLabel="'Properties'" 
+      :yAxisLabel="'Violations'" 
+      :data="violationsPerPropertyChart" /> 
+    <BarChart 
+      :title="'Violations per Constraint Type'" 
+      :xAxisLabel="'Constraints'" 
+      :yAxisLabel="'Triggers'" 
+      :data="violationsPerConstraintChart" /> 
+  </div>
     <!-- Instances Table -->
     <div class="bg-white rounded-xl shadow-lg overflow-hidden">
       <div class="px-6 py-4 bg-gray-50 border-b">
@@ -101,18 +118,14 @@
             <tr>
               <th class="table-head">Instance</th>
               <th class="table-head">Key Properties</th>
-              <th class="table-head text-center">Status</th>
               <th class="table-head">Violations</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
             <tr
+            
               v-for="inst in instances"
               :key="inst.id"
-              :class="{
-                'bg-green-50': inst.violations.length === 0,
-                'bg-red-50': inst.violations.length > 0,
-              }"
               class="hover:bg-gray-50 transition"
             >
               <td class="px-6 py-4">
@@ -126,18 +139,6 @@
                     <span class="text-gray-600 ml-1">{{ prop.value }}</span>
                   </div>
                 </div>
-              </td>
-              <td class="px-6 py-4 text-center">
-                <span
-                  :class="inst.violations.length === 0
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-red-100 text-red-800'"
-                  class="px-3 py-1 rounded-full text-xs font-semibold"
-                >
-                  {{ inst.violations.length === 0
-                    ? 'Clean'
-                    : `${inst.violations.length} issue${inst.violations.length > 1 ? 's' : ''}` }}
-                </span>
               </td>
               <td class="px-6 py-4 text-sm">
                 <template v-if="inst.violations.length">
@@ -160,6 +161,7 @@
 </template>
 
 <script setup>
+import BarChart from "../Charts/BarChart.vue";
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -229,6 +231,24 @@ const constraintDefinitions = ref([
 ])
 
 const shortenIri = iri => iri.split(/[\/#]/).pop()
+const violationsPerInstanceChart = 
+  computed(() => ({labels: instances.value.map(i => 
+                                shortenIri(i.node)), 
+                                datasets:[{label: 'Violations', 
+                                data: instances.value.map(i => i.violations.length),},],}))
+const violationsPerPropertyChart = 
+  computed(() => {const counts = new Map() 
+                 instances.value.forEach(i => 
+                                i.violations.forEach(v => 
+                                {counts.set(v.property, (counts.get(v.property)||0) + 1)}),
+                                ) 
+const labels = Array.from(counts.keys()) 
+const data = labels.map(l => counts.get(l)) 
+return {labels, datasets:[{label: 'Violations', data,},],}}) 
+const violationsPerConstraintChart = computed(() => ({
+  labels: constraintDefinitions.value.map(c => c.constraint), 
+  datasets: [ { label: 'Triggers', data: constraintDefinitions.value.map(c => c.count),},],})
+                                             )
 
 onMounted(() => {
   const id = route.params.classId

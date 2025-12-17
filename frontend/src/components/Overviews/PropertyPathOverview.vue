@@ -72,8 +72,7 @@
               <button class="text-blue-600 hover:text-blue-800">
                 <font-awesome-icon icon="arrow-right" />
               </button>
-            </td>
-          </tr>
+            </td></tr>
         </tbody>
       </table>
 
@@ -87,10 +86,9 @@
         </button>
         <span class="text-gray-700">Page {{ currentPage }} of {{ totalPages }}</span>
         <button
-          :disabled="currentPage === totalPages"
+          :disabled="currentPage=== totalPages"
           @click="nextPage"
-          class="px-4 py-2 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50"
-        >
+          class="px-4 py-2 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50">
           Next
         </button>
       </div>
@@ -124,6 +122,7 @@
  *
  * @returns {HTMLElement} A dashboard page showing property path statistics in summary cards at
  * the top, three data visualizations (histogram, bar chart, and box plot) in the middle, and a
+
  * paginated data table listing all property paths with their types and descriptions at the bottom.
  */
 // Importing components
@@ -139,8 +138,7 @@ const router = useRouter();
 // Mock data for tags
 const tags = [
   { title: "Total Property Paths", value: 50 },
-  { title: "Paths with Descriptions (%)", value: "60%" },
-  { title: "Max Path Depth per Property", value: 100 },
+  { title: "Paths with Descriptions (%)", value: "60%" },{ title: "Max Path Depth per Property", value: 100 },
   { title: "Avg Path Depth per Property", value: 2 },
 ];
 
@@ -183,7 +181,6 @@ const paginatedData = computed(() => {
   const start = (currentPage.value - 1) * pageSize.value;
   return propertyPaths.value.slice(start, start + pageSize.value);
 });
-
 const sortedPaginatedData = computed(() => {
   const data = paginatedData.value;
   if (sortKey.value) {
@@ -204,8 +201,7 @@ const columns = ref([
   { label: "Description", field: "description"}
 ])
 
-const sortColumn = (column) => {
-  if (sortKey.value === column.field) {
+const sortColumn = (column) => {if (sortKey.value === column.field) {
     sortOrder.value = sortOrder.value === "asc" ? "desc" : "asc";
   } else {
     sortKey.value = column.field;
@@ -246,7 +242,6 @@ tbody tr {
 .grid {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
-
 .chart-container {
   height: 100%;
   width: 100%;
