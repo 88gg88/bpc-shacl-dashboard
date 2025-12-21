@@ -1,97 +1,103 @@
 <template>
-  <div class="class-overview p-4">
-    <!-- Tags Section -->
-    <div class="grid grid-cols-4 gap-4 mb-6">
+  <div class="class-overview p-6 w-full">
+    <!-- tags -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
       <div
         v-for="(tag, i) in tags"
         :key="i"
-        class="flex items-center bg-white rounded-lg shadow p-6 hover:shadow-md transition"
+        class="bg-white rounded-xl shadow p-6 hover:shadow-md transition"
       >
-        <div class="flex-grow">
-          <h3 class="text-sm font-medium text-gray-600 mb-1">{{ tag.title }}</h3>
-          <p class="text-3xl font-bold text-gray-800">{{ tag.value }}</p>
-        </div>
-        <div class="flex items-center justify-center bg-gray-200 rounded-full w-12 h-12">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none"
-               viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M4 4h16v16H4z" />
-          </svg>
+        <div class="flex justify-between items-center">
+          <div>
+            <h3 class="text-sm font-medium text-gray-600 mb-1">{{ tag.title }}</h3>
+            <p class="text-4xl font-bold text-gray-800">{{ tag.value }}</p>
+          </div>
         </div>
       </div>
     </div>
-    <!-- Plots Section -->
-    <div class="grid grid-cols-2 gap-4 mb-6">
-      <BarChart
-        :title="'Instances per Class'"
-        :xAxisLabel="'Classes'"
-        :yAxisLabel="'Instances'"
-        :data="instancesChart"
-      />
-      <BarChart
-        :title="'Violations per Class'"
-        :xAxisLabel="'Classes'"
-        :yAxisLabel="'Violations'"
-        :data="violationsChart"
-      />
+    <!-- charts -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
+      <div class="bg-white rounded-xl shadow p-6">
+        <HistogramChart
+          :title="'Top 5 Classes by Instances'"
+          :xAxisLabel="'Classes'"
+          :yAxisLabel="'Instances'"
+          :data="instancesChart"
+        />
+      </div>
+      <div class="bg-white rounded-xl shadow p-6">
+        <HistogramChart
+          :title="'Top 5 Classes by Violations'"
+          :xAxisLabel="'Classes'"
+          :yAxisLabel="'Violations'"
+          :data="violationsChart"
+        />
+      </div>
     </div>
-
     <!-- Table Section -->
-    <div class="bg-white border border-gray-200 p-6 rounded-lg shadow-lg">
-      <h2 class="text-2xl font-bold text-gray-700 mb-4">Class Details</h2>
-      <table class="w-full border-collapse">
-        <thead class="bg-gray-200">
-          <tr>
-            <th
-              v-for="(column, index) in columns"
-              :key="index"
-              class="text-left px-6 py-3 border-b border-gray-300 text-gray-600 font-medium cursor-pointer"
-              @click="sortColumn(column)">
-              {{ column.label }}
-              <span class="sort-indicator" >
-                {{ sortKey === column.field ? (sortOrder === 'asc' ? ' ▲' : ' ▼') : '' }}
-              </span>
-            </th>
-            <th class="text-center px-6 py-3 border-b border-gray-300 text-gray-600 font-medium"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="classX in sortedPaginatedData"
-            :key="classX.id"
-            class="even:bg-gray-50 hover:bg-blue-50 transition-colors"
-            @click="goToClass(classX)">
-            <td class="px-6 py-4 border-b border-gray-300">{{ classX.classId }}</td>
-            <td class="px-6 py-4 border-b border-gray-300">{{ classX.instances }}</td>
-            <td class="px-6 py-4 border-b border-gray-300">{{ classX.violations }}</td>
-            <td class="px-6 py-4 border-b border-gray-300 text-center">
-              <button class="text-blue-600 hover:text-blue-800">
-                <font-awesome-icon icon="arrow-right" />
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="flex justify-between items-center mt-4">
+    <div class="bg-white rounded-xl shadow overflow-hidden">
+      <div class="bg-gray-50 px-6 py-4 border-b">
+        <h2 class="text-xl font-semibold text-gray-800">Class Details</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-100">
+            <tr>
+              <th
+                v-for="(column, index) in columns"
+                :key="index"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase cursor-pointer"
+                @click="sortColumn(column)"
+              >
+                {{ column.label }}
+                <span class="ml-1">
+                  {{ sortKey === column.field ? (sortOrder === 'asc' ? '▲' : '▼') : '' }}
+                </span>
+              </th>
+              <th class="px-6 py-3 text-center text-xs font-medium text-gray-700 uppercase"></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200 bg-white">
+            <tr
+              v-for="classX in sortedPaginatedData"
+              :key="classX.id"
+              class="hover:bg-gray-50 cursor-pointer"
+              @click="goToClass(classX)"
+            >
+              <td class="px-6 py-4">
+                <code class="text-sm bg-blue-50 text-blue-800 px-2 py-1 rounded">{{ classX.classId }}</code>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-600">{{ classX.instances }}</td>
+              <td class="px-6 py-4 text-sm text-gray-600">{{ classX.violations }}</td>
+              <td class="px-6 py-4 text-center">
+                <font-awesome-icon icon="arrow-right" class="text-blue-500 hover:text-blue-700" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Pagination -->
+      <div class="flex justify-between items-center px-6 py-4 bg-gray-50 border-t">
         <button
           :disabled="currentPage === 1"
           @click="prevPage"
-          class="px-4 py-2 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50">
-          Previous
+          class="px-4 py-2 border rounded hover:bg-gray-50 disabled:opacity-50"
+        >Previous
         </button>
-        <span class="text-gray-700">Page {{ currentPage }} of {{ totalPages }}</span>
+        <span class="text-gray-700">
+          Page {{ currentPage }} of {{ totalPages }}
+        </span>
         <button
           :disabled="currentPage === totalPages"
           @click="nextPage"
-          class="px-4 py-2 bg-gray-200 text-gray-600 rounded hover:bg-gray-300 disabled:opacity-50"
-        >
-          Next
+          class="px-4 py-2 border rounded hover:bg-gray-50 disabled:opacity-50"
+        >Next
         </button>
       </div>
     </div>
   </div>
 </template>
+
 <script setup>
 /**
  * ClassOverview component
@@ -99,7 +105,7 @@
  * detailed description incoming...
  */
 import SparklineChart from "../Charts/SparklineChart.vue";
-import BarChart from "../Charts/BarChart.vue";
+import HistogramChart from "../Charts/HistogramChart.vue";
 import { useRouter } from "vue-router";
 import { ref, computed } from "vue";
 
@@ -108,6 +114,7 @@ const router = useRouter();
 // Mock data for tags
 const tags = [
   { title: "Total Classes", value: 25 },
+  { title: "Total Violations", value: 125},
   { title: "Avg Violations per Class", value: 5 },
   { title: "Most Violated Class", value: "Stadium" },
 ];
@@ -188,9 +195,22 @@ const nextPage = () => {
 const goToClass = (c) => {
   router.push({ name: "ClassDetailedView", params: { classId: c.classId } });
 };
-</script> <style scoped>
-.sparkline {
-  width: 100px;
-  height: 50px;
+</script>
+
+<style scoped>
+.summary-card {
+  @apply bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition;
+}
+.summary-title {
+  @apply text-sm font-medium text-gray-600;
+}
+.summary-value {
+  @apply text-4xl font-bold text-gray-800 mt-1;
+}
+.table-head {
+  @apply px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider;
+}
+code {
+  @apply font-mono text-sm bg-blue-50 text-blue-800 px-2 py-1 rounded;
 }
 </style>
