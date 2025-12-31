@@ -1,4 +1,5 @@
 from flask import Flask, send_file, abort
+
 import os
 import subprocess
 
@@ -18,14 +19,17 @@ The app handles:
 Usage:
   python app.py  # Starts the Flask server on port 80
 """
-
-
 # Resolve STATIC_FOLDER to an absolute path
 
 STATIC_FOLDER = os.path.abspath(os.path.join('..', 'frontend', 'dist'))
 VUE_SOURCE_FOLDER = os.path.abspath('../frontend')
 
 app = Flask(__name__, static_folder=STATIC_FOLDER, static_url_path='')  # Use the build output folder as the static folder
+
+
+from routes import blueprints
+for bp in blueprints:
+    app.register_blueprint(bp)
 
 # Function to build the frontend (Vue.js)
 def build_frontend():

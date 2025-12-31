@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from functions import (
+from functions.homepage_service import (
     get_number_of_node_shapes,
     get_number_of_node_shapes_with_violations,
     get_number_of_paths_in_shapes_graph,

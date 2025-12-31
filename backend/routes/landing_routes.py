@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from functions import load_graphs
+from functions.landing_service import load_graphs
 
 # Define a Blueprint for landing-related routes
 landing_bp = Blueprint('landing', __name__)

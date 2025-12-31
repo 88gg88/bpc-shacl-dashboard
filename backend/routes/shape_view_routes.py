@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from functions import (
+from functions.shapes_overview_service import (
     get_number_of_violations_for_node_shape,
     get_number_of_violated_focus_for_node_shape,
     get_number_of_property_paths_for_node_shape,
