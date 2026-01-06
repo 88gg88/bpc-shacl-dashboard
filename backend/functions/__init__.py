@@ -62,6 +62,17 @@ from .shapes_overview_service import (
     get_constraints_count_for_property_shapes,
 )
 
+from .property_path_overview_service import (
+    get_total_violations,
+    get_total_violated_paths,
+    get_most_violated_path,
+    get_most_violated_constraint,
+    get_top_violated_paths,
+    get_path_type_distribution,
+    get_top_violated_constraints,
+    get_property_path_details
+)
+
 __all__ = [
     "load_graphs",
     "get_number_of_constraints_for_node_shape",
@@ -97,5 +108,12 @@ __all__ = [
     "distribution_of_violations_per_path",
     "distribution_of_violations_per_focus_node",
     "generate_validation_details_report",
-    
+    "get_total_violations",
+    "get_total_violated_paths",
+    "get_most_violated_path",
+    "get_most_violated_constraint",
+    "get_top_violated_paths",
+    "get_path_type_distribution",
+    "get_top_violated_constraints",
+    "get_property_path_details"
 ]
