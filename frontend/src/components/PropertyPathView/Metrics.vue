@@ -1,6 +1,5 @@
 <template>
   <div class="key-metrics grid grid-cols-3 gap-4">
-    <!-- Frequencies of Path Occurrences -->
     <div class="metric-card bg-white shadow rounded p-4 flex items-center justify-between">
       <div class="flex items-center">
         <div class="icon bg-blue-100 text-blue-500 p-2 rounded-full mr-4">
@@ -20,7 +19,6 @@
       </div>
     </div>
 
-    <!-- Distribution of Violations Along the Path -->
     <div class="metric-card bg-white shadow rounded p-4 flex items-center justify-between">
       <div class="flex items-center">
         <div class="icon bg-blue-100 text-blue-500 p-2 rounded-full mr-4">
@@ -40,7 +38,6 @@
       </div>
     </div>
 
-    <!-- Example Triples -->
     <div class="metric-card bg-white shadow rounded p-4 flex items-center justify-between">
       <div class="flex items-center">
         <div class="icon bg-blue-100 text-blue-500 p-2 rounded-full mr-4">

@@ -79,7 +79,7 @@ def get_most_violated_subject_for_path(path_uri):
     """
     results = execute_sparql_query(query)
     if not results:
-        return {"subject": "—", "count": 0}
+        return {"subject": "-", "count": 0}
 
     raw_subject = results[0]["focusNode"]["value"]
     count = int(results[0]["count"]["value"])
@@ -138,7 +138,7 @@ def get_most_common_constraint_for_path(path_uri):
     """
     results = execute_sparql_query(query)
     if not results:
-        return {"constraint": "—", "count": 0}
+        return {"constraint": "-", "count": 0}
 
     raw_component = results[0]["component"]["value"]
     count = int(results[0]["count"]["value"])
@@ -148,6 +148,7 @@ def get_most_common_constraint_for_path(path_uri):
     display_name = local_name.replace("ConstraintComponent", "")
 
     return {"constraint": display_name, "count": count}
+
 
 def get_top_violated_subjects(encoded_path, limit=5):
     query = f"""
@@ -183,6 +184,7 @@ def get_top_violated_subjects(encoded_path, limit=5):
         })
 
     return data
+
 
 def get_top_violated_constraint_types(encoded_path, limit=5):
     query = f"""
@@ -220,6 +222,7 @@ def get_top_violated_constraint_types(encoded_path, limit=5):
 
     return data
 
+
 def get_top_violation_types(encoded_path, limit=5):
     query = f"""
     PREFIX sh: <http://www.w3.org/ns/shacl#>
@@ -254,6 +257,7 @@ def get_top_violation_types(encoded_path, limit=5):
         })
 
     return data
+
 
 def get_triples_with_violations_for_path(path_uri):
     query = f"""

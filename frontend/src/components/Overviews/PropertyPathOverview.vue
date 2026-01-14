@@ -324,8 +324,9 @@ const nextPage = () => {
   if (currentPage.value < totalPages.value) currentPage.value++;
 };
 
-const goToPropertyPath = (path) => {
-  router.push({ name: "PropertyPathView", params: { path: path.path } });
+const goToPropertyPath = (row) => {
+  const encoded = encodeURIComponent(row.rawPath).replace(/:/g, "_");
+  router.push({ name: "PropertyPathView", params: { path: encoded } });
 };
 </script>
 

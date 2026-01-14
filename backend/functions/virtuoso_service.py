@@ -1,10 +1,11 @@
 import subprocess
 import sys
 import os
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import ENDPOINT_URL, SHAPES_GRAPH_URI, VALIDATION_REPORT_URI, DATA_DIR_IN_DOCKER, DOCKER_CONTAINER_NAME
 from SPARQLWrapper import SPARQLWrapper, JSON
-import os 
+import os
 
 """
 Virtuoso Service Module
@@ -40,13 +41,13 @@ Configuration:
 - DOCKER_CONTAINER_NAME: Name of Docker container (default: virtuoso)
 """
 
-
 # Global variables
 ENDPOINT_URL = "http://localhost:8890/sparql"
 SHAPES_GRAPH_URI = "http://ex.org/ShapesGraph"
 VALIDATION_REPORT_URI = "http://ex.org/ValidationReport"
 DATA_DIR_IN_DOCKER = "/data"  # Directory in Docker container
 DOCKER_CONTAINER_NAME = "virtuoso"  # Name of the Docker container
+
 
 # ############ TODO to fix to use global variables #################
 
@@ -79,7 +80,8 @@ def clear_graphs_only():
         print("✅ Output:\n", result.stdout)
     except subprocess.CalledProcessError as e:
         print("❌ Error:\n", e.stderr)
-            
+
+
 #clear_graphs_only()
 
 def load_graphs(directory: str, shapes_file: str, report_file: str):
@@ -95,7 +97,7 @@ def load_graphs(directory: str, shapes_file: str, report_file: str):
         TypeError: If any of the arguments are not strings.
         ValueError: If any of the arguments are empty strings.
     """
-    
+
     # Type checking
     if not all(isinstance(arg, str) for arg in [directory, shapes_file, report_file]):
         raise TypeError("All arguments must be strings.")
@@ -173,10 +175,11 @@ def load_graphs(directory: str, shapes_file: str, report_file: str):
 
     except FileNotFoundError:
         print("❌ ISQL tool not found. Please check if Virtuoso is installed correctly.")
-        
-        
+
+
 #clear_graphs_only()
 load_graphs("shacl", r"schema2_updated.ttl", r"LKG3_Schema2_result.ttl")
+
 
 def get_all_shapes_names(graph_uri: str = "http://ex.org/ValidationReport") -> list:
     """
@@ -210,7 +213,6 @@ def get_all_shapes_names(graph_uri: str = "http://ex.org/ValidationReport") -> l
     shapes = [result["shape"]["value"] for result in results["results"]["bindings"]]
 
     return shapes
-
 
 
 def get_all_focus_node_names(graph_uri: str = "http://ex.org/ValidationReport") -> list:
@@ -247,7 +249,6 @@ def get_all_focus_node_names(graph_uri: str = "http://ex.org/ValidationReport") 
     return focus_nodes
 
 
-
 def get_all_property_path_names(graph_uri: str = "http://ex.org/ValidationReport") -> list:
     """
     Query the Virtuoso SPARQL endpoint to get all sh:resultPath values
@@ -282,7 +283,6 @@ def get_all_property_path_names(graph_uri: str = "http://ex.org/ValidationReport
     return property_paths
 
 
-
 def get_all_constraint_components_names(graph_uri: str = "http://ex.org/ValidationReport") -> list:
     """
     Query the Virtuoso SPARQL endpoint to get all sh:sourceConstraintComponent values
@@ -315,7 +315,6 @@ def get_all_constraint_components_names(graph_uri: str = "http://ex.org/Validati
     constraint_components = [result["constraintComponent"]["value"] for result in results["results"]["bindings"]]
 
     return constraint_components
-
 
 
 def get_violations_for_shape_name(shape_name, graph_uri: str = "http://ex.org/ValidationReport") -> list:
@@ -377,7 +376,6 @@ def get_violations_for_shape_name(shape_name, graph_uri: str = "http://ex.org/Va
     return violations
 
 
-
 def get_number_of_shapes_in_shapes_graph(graph_uri: str = "http://ex.org/ShapesGraph") -> dict:
     """
     Query the Virtuoso SPARQL endpoint to get the number of Node Shapes and Property Shapes
@@ -421,7 +419,6 @@ def get_number_of_shapes_in_shapes_graph(graph_uri: str = "http://ex.org/ShapesG
     }
 
 
-
 def get_number_of_violations_in_validation_report(graph_uri: str = "http://ex.org/ValidationReport") -> int:
     """
     Query the Virtuoso SPARQL endpoint to get the total number of violations
@@ -456,7 +453,6 @@ def get_number_of_violations_in_validation_report(graph_uri: str = "http://ex.or
     violation_count = int(results["results"]["bindings"][0]["violationCount"]["value"])
 
     return violation_count
-
 
 
 def map_property_shapes_to_node_shapes(validation_report_uri: str = "http://ex.org/ValidationReport",
@@ -499,8 +495,6 @@ def map_property_shapes_to_node_shapes(validation_report_uri: str = "http://ex.o
     ]
 
     return shape_mapping
-
-
 
 
 def get_shape_from_shapes_graph(node_shape_names: list) -> dict:
@@ -604,7 +598,8 @@ def get_shape_from_shapes_graph(node_shape_names: list) -> dict:
         })
 
     # Step 2: Query Property Shape triples for each Node Shape
-    property_shapes = {triple["object"] for shape in shape_details.values() for triple in shape["triples"] if triple["predicate"] == "http://www.w3.org/ns/shacl#property"}
+    property_shapes = {triple["object"] for shape in shape_details.values() for triple in shape["triples"] if
+                       triple["predicate"] == "http://www.w3.org/ns/shacl#property"}
 
     for property_shape in property_shapes:
         sparql.setQuery(f"""
@@ -632,7 +627,6 @@ def get_shape_from_shapes_graph(node_shape_names: list) -> dict:
                 })
 
     return shape_details
-
 
 
 # def get_number_of_violations_for_node_shape(nodeshape_name: str) -> int:
@@ -689,7 +683,6 @@ def get_shape_from_shapes_graph(node_shape_names: list) -> dict:
 #     return violation_count
 
 
-
 # def get_number_of_property_paths_for_node_shape(shape_name: str) -> int:
 #     """
 #     Query the Virtuoso SPARQL endpoint to get the number of distinct sh:path values
@@ -726,7 +719,6 @@ def get_shape_from_shapes_graph(node_shape_names: list) -> dict:
 #     return path_count
 
 
-
 def get_number_of_property_shapes_for_node_shape(shape_name: str) -> int:
     """
     Query the Virtuoso SPARQL endpoint to get the number of Property Shapes
@@ -760,7 +752,6 @@ def get_number_of_property_shapes_for_node_shape(shape_name: str) -> int:
     property_shape_count = int(results["results"]["bindings"][0]["propertyShapeCount"]["value"])
 
     return property_shape_count
-
 
 
 # def get_number_of_affected_focus_nodes_for_node_shape(nodeshape_name: str) -> int:
@@ -817,7 +808,6 @@ def get_number_of_property_shapes_for_node_shape(shape_name: str) -> int:
 #     focus_node_count = int(validation_results["results"]["bindings"][0]["focusNodeCount"]["value"])
 
 #     return focus_node_count
-
 
 
 def get_most_violated_constraint_for_node_shape(shape_name: str) -> str:
@@ -882,8 +872,6 @@ def get_most_violated_constraint_for_node_shape(shape_name: str) -> str:
 
     # If no violations are found, return an empty string
     return ""
-
-
 
 
 # def get_number_of_constraints_for_node_shape(nodeshape_name: str) -> int:
@@ -1006,7 +994,6 @@ def get_maximum_number_of_violations_in_validation_report_for_node_shape() -> di
     return {"nodeShape": "", "violationCount": 0}
 
 
-
 def get_average_number_of_violations_in_validation_report_for_node_shape() -> float:
     """
     Query the Virtuoso SPARQL endpoint to calculate the average number of violations
@@ -1064,3 +1051,11 @@ def get_average_number_of_violations_in_validation_report_for_node_shape() -> fl
 
     average_violations = total_violations / total_node_shapes
     return round(average_violations, 2)
+
+
+def run_sparql_query(query: str):
+    sparql = SPARQLWrapper(ENDPOINT_URL)
+    sparql.setQuery(query)
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+    return results["results"]["bindings"]

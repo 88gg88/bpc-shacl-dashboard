@@ -1,6 +1,7 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
 from config import ENDPOINT_URL, VALIDATION_REPORT_URI, SHAPES_GRAPH_URI
 
+
 def execute_sparql_query(query):
     sparql = SPARQLWrapper(ENDPOINT_URL)
     sparql.setQuery(query)
@@ -10,6 +11,7 @@ def execute_sparql_query(query):
     except Exception as e:
         print(f"SPARQL query error: {e}")
         return []
+
 
 def get_total_violations():
     query = f"""
@@ -23,6 +25,7 @@ def get_total_violations():
     """
     results = execute_sparql_query(query)
     return int(results[0]["count"]["value"]) if results else 0
+
 
 def get_total_violated_paths():
     query = f"""
@@ -158,6 +161,7 @@ def get_path_type_distribution():
 
     return data
 
+
 def get_top_violated_constraints(limit=10):
     query = f"""
     PREFIX sh: <http://www.w3.org/ns/shacl#>
@@ -225,7 +229,6 @@ def get_property_path_details(page=1, page_size=10, sort_by="violations", sort_o
             "violations": violations
         })
 
-    # Total for pagination
     count_query = f"""
     PREFIX sh: <http://www.w3.org/ns/shacl#>
     SELECT (COUNT(DISTINCT ?path) AS ?total)

@@ -1,21 +1,15 @@
-# config.py
-
-# SPARQL endpoint configuration
 ENDPOINT_URL = "http://localhost:8890/sparql"
 
-# Authentication settings (if needed)
+
 AUTH_REQUIRED = False
 USERNAME = ""
 PASSWORD = ""
 
-# Triple store type - used to handle store-specific operations
-TRIPLE_STORE_TYPE = "virtuoso"  # Options: "virtuoso", "fuseki", "stardog", etc.
+TRIPLE_STORE_TYPE = "virtuoso"
 
-# Graph URIs
 SHAPES_GRAPH_URI = "http://ex.org/ShapesGraph"
 VALIDATION_REPORT_URI = "http://ex.org/ValidationReport"
 
-# SHACL Constraints and Features
 SHACL_FEATURES = [
     "http://www.w3.org/ns/shacl#class",
     "http://www.w3.org/ns/shacl#datatype",
@@ -47,23 +41,21 @@ SHACL_FEATURES = [
     "http://www.w3.org/ns/shacl#in"
 ]
 
-# Docker-related settings (for Virtuoso)
-DATA_DIR_IN_DOCKER = "/data"  # Directory in Docker container
-DOCKER_CONTAINER_NAME = "virtuoso"  # Name of the Docker container
+DATA_DIR_IN_DOCKER = "/data"
+DOCKER_CONTAINER_NAME = "virtuoso"
 
-# Store-specific configuration
 STORE_CONFIG = {
     "virtuoso": {
-        "isql_path": "/usr/local/virtuoso-opensource/bin/isql",  # Only needed for Virtuoso
+        "isql_path": "/usr/local/virtuoso-opensource/bin/isql",
         "isql_port": 1111,
         "bulk_load_enabled": True,
     },
     "fuseki": {
-        "admin_endpoint": "http://localhost:3030/$/",  # Example for Fuseki
+        "admin_endpoint": "http://localhost:3030/$/",
         "bulk_load_enabled": False,
     },
     "stardog": {
-        "admin_endpoint": "http://localhost:5820",  # Example for Stardog
+        "admin_endpoint": "http://localhost:5820",
         "database": "shacldb",
         "bulk_load_enabled": True,
     }

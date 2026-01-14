@@ -11,53 +11,37 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
-import ToggleQuestionMark from "../Reusable/ToggleQuestionMark.vue";
-import { chartTheme } from './../../assets/chartTheme';
+import {ref,onMounted,watch,onBeforeUnmount} from 'vue'
+import ToggleQuestionMark from "../Reusable/ToggleQuestionMark.vue"
+import {chartTheme} from './../../assets/chartTheme'
+import {Chart,CategoryScale,LinearScale,BarElement,Tooltip,Legend} 
+from 'chart.js'
 
-import {
-  Chart,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Tooltip,
-  Legend
-} from 'chart.js';
 
-Chart.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Tooltip,
-  Legend
-);
+Chart.register(CategoryScale,LinearScale,BarElement,Tooltip,Legend)
 
 const props = defineProps({
   title: { type: String, default: 'Histogram' },
-  xAxisLabel: { type: String, default: 'X Axis' },
+  xAxisLabel: { type: String, default: 'X Axis'  },
   yAxisLabel: { type: String, default: 'Y Axis' },
-  data: {
-    type: Object,
-    required: true,
-    validator: v => v?.labels && v?.datasets
-  }
-});
+  data: {type: Object,required: true,validator: v => v?.labels && v?.datasets}
+})
 
-const histogramCanvas = ref(null);
-const chartInstance = ref(null);
+const explanationText = ref('')
 
-onMounted(() => {
-  if (!props.data) return;
+const histogramCanvas = ref(null)
+const chartInstance = ref(null)
+
+const renderChart = (data) => {
+  if (chartInstance.value) {
+    chartInstance.value.destroy()}
 
   chartInstance.value = new Chart(histogramCanvas.value, {
     type: 'bar',
     data: {
-      ...props.data,
-      datasets: props.data.datasets.map(ds => ({
-        ...ds,
-        backgroundColor: ds.backgroundColor || chartTheme.colors.primary,
-        borderColor: ds.borderColor || chartTheme.colors.secondary,
-        borderWidth: 1
+      ...data,
+      datasets: data.datasets.map(ds => ({
+        ...ds,backgroundColor: ds.backgroundColor || chartTheme.colors.primary,borderColor: ds.borderColor || chartTheme.colors.secondary,borderWidth: 1
       }))
     },
     options: {
@@ -80,60 +64,28 @@ onMounted(() => {
         y: { grid: { color: chartTheme.defaults.gridlineColor } }
       }
     }
-  });
-});
+  })
+}
+
+onMounted(() => {
+  if (props.data) renderChart(props.data)
+})
 
 watch(
   () => props.data,
   (newData) => {
-    if (!newData) return;
-
-    // Destroy previous chart if exists
-    if (chartInstance.value) {
-      chartInstance.value.destroy();
-    }
-
-    // Create a new chart with updated data
-    chartInstance.value = new Chart(histogramCanvas.value, {
-      type: 'bar',
-      data: {
-        ...newData,
-        datasets: newData.datasets.map(ds => ({
-          ...ds,
-          backgroundColor: ds.backgroundColor || chartTheme.colors.primary,
-          borderColor: ds.borderColor || chartTheme.colors.secondary,
-          borderWidth: 1
-        }))
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: true,
-            labels: { color: chartTheme.defaults.legendColor }
-          },
-          tooltip: {
-            enabled: true,
-            backgroundColor: '#ffffff',
-            titleColor: chartTheme.defaults.textColor,
-            bodyColor: chartTheme.defaults.textColor
-          }
-        },
-        scales: {
-          x: { grid: { display: false } },
-          y: { grid: { color: chartTheme.defaults.gridlineColor } }
-        }
-      }
-    });
+    if (newData) renderChart(newData)
   },
+
   { deep: true }
-);
+)
 
 onBeforeUnmount(() => {
-  chartInstance.value?.destroy();
-});
+  chartInstance.value?.destroy()
+})
 </script>
+
+
 
 <style scoped>
 .chart-card {
@@ -154,10 +106,4 @@ onBeforeUnmount(() => {
   position: relative;
   height: 300px;
 }
-
-.chart-body canvas {
-  max-height: 100%;
-}
 </style>
-
-
