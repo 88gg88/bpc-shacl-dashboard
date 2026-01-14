@@ -8,6 +8,7 @@ from functions.property_path_overview_service import (
 
 property_path_overview_bp = Blueprint("property_path_overview", __name__, url_prefix="/api/property-path")
 
+
 @property_path_overview_bp.route("/total-violations", methods=["GET"])
 def total_violations():
     try:
@@ -27,6 +28,7 @@ def violated_paths_count():
         print(f"Error in violated-paths-count endpoint: {e}")
         return jsonify({"totalViolatedPaths": 0}), 400
 
+
 @property_path_overview_bp.route("/most-violated-path", methods=["GET"])
 def most_violated_path():
     try:
@@ -41,6 +43,7 @@ def most_violated_path():
             "mostViolatedPath": "N/A",
             "violationCount": 0
         }), 400
+
 
 @property_path_overview_bp.route("/most-violated-constraint", methods=["GET"])
 def most_violated_constraint():
@@ -57,6 +60,7 @@ def most_violated_constraint():
             "violationCount": 0
         }), 400
 
+
 @property_path_overview_bp.route("/top-violated-paths", methods=["GET"])
 def top_violated_paths():
     try:
@@ -66,6 +70,7 @@ def top_violated_paths():
         print(f"Error in top-violated-paths endpoint: {e}")
         return jsonify({"topPaths": []}), 400
 
+
 @property_path_overview_bp.route("/path-type-distribution", methods=["GET"])
 def path_type_distribution():
     try:
@@ -74,6 +79,7 @@ def path_type_distribution():
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({"pathTypes": []}), 400
+
 
 @property_path_overview_bp.route("/top-violated-constraints", methods=["GET"])
 def top_violated_constraints():

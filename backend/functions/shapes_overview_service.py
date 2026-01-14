@@ -1,13 +1,13 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
 import sys
 import os
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from config import ENDPOINT_URL, SHAPES_GRAPH_URI, VALIDATION_REPORT_URI, SHACL_FEATURES
 import math
 import requests
-import time 
-import csv 
-
+import time
+import csv
 
 """
 Shapes Overview Service Module
@@ -79,7 +79,8 @@ Configuration:
 #]
 
 
-def get_number_of_violations_for_node_shape(nodeshape_name: str, shapes_graph_uri: str = SHAPES_GRAPH_URI, validation_report_uri: str = VALIDATION_REPORT_URI) -> int:
+def get_number_of_violations_for_node_shape(nodeshape_name: str, shapes_graph_uri: str = SHAPES_GRAPH_URI,
+                                            validation_report_uri: str = VALIDATION_REPORT_URI) -> int:
     """
     Query the Virtuoso SPARQL endpoint to calculate the number of violations related to the given Node Shape.
 
@@ -130,8 +131,8 @@ def get_number_of_violations_for_node_shape(nodeshape_name: str, shapes_graph_ur
     return violation_count
 
 
-
-def get_number_of_violated_focus_for_node_shape(node_shape: str, shapes_graph_uri: str = SHAPES_GRAPH_URI, validation_report_uri: str = VALIDATION_REPORT_URI) -> int:
+def get_number_of_violated_focus_for_node_shape(node_shape: str, shapes_graph_uri: str = SHAPES_GRAPH_URI,
+                                                validation_report_uri: str = VALIDATION_REPORT_URI) -> int:
     """
     Query the Virtuoso SPARQL endpoint to calculate the number of unique sh:focusNode values
     in the Validation Report that are violated due to the given Node Shape.
@@ -184,7 +185,6 @@ def get_number_of_violated_focus_for_node_shape(node_shape: str, shapes_graph_ur
     return focus_node_count
 
 
-
 def get_number_of_property_paths_for_node_shape(shape_name: str, shapes_graph_uri: str = SHAPES_GRAPH_URI) -> int:
     """
     Query the Virtuoso SPARQL endpoint to calculate the number of unique sh:path values
@@ -220,8 +220,8 @@ def get_number_of_property_paths_for_node_shape(shape_name: str, shapes_graph_ur
     return path_count
 
 
-
-def get_number_of_constraints_for_node_shape(node_shape_name: str, shapes_graph_uri: str = SHAPES_GRAPH_URI, validation_report_uri: str = VALIDATION_REPORT_URI) -> int:
+def get_number_of_constraints_for_node_shape(node_shape_name: str, shapes_graph_uri: str = SHAPES_GRAPH_URI,
+                                             validation_report_uri: str = VALIDATION_REPORT_URI) -> int:
     """
     Query the Virtuoso SPARQL endpoint to get the number of unique constraints
     (sh:sourceConstraintComponent) associated with the given Node Shape from the Validation Report.
@@ -281,8 +281,9 @@ def get_number_of_constraints_for_node_shape(node_shape_name: str, shapes_graph_
     return constraint_count
 
 
-
-def get_property_shapes(node_shape: str, limit: int = None, offset: int = None, shapes_graph_uri: str = SHAPES_GRAPH_URI, validation_report_uri: str = VALIDATION_REPORT_URI) -> list:
+def get_property_shapes(node_shape: str, limit: int = None, offset: int = None,
+                        shapes_graph_uri: str = SHAPES_GRAPH_URI,
+                        validation_report_uri: str = VALIDATION_REPORT_URI) -> list:
     """
     Retrieve Property Shapes associated with the given Node Shape, including statistics about violations,
     constraints, and the most violated constraint.
@@ -395,9 +396,9 @@ def get_property_shapes(node_shape: str, limit: int = None, offset: int = None, 
 
 
 def get_number_of_violations_per_constraint_type_for_property_shape(
-    node_shape: str,
-    shapes_graph_uri: str = SHAPES_GRAPH_URI,
-    validation_report_uri: str = VALIDATION_REPORT_URI,
+        node_shape: str,
+        shapes_graph_uri: str = SHAPES_GRAPH_URI,
+        validation_report_uri: str = VALIDATION_REPORT_URI,
 ) -> list:
     """
     Retrieve the number of violations per constraint type (sh:sourceConstraintComponent) for each
@@ -474,6 +475,7 @@ def get_number_of_violations_per_constraint_type_for_property_shape(
 
     return property_shapes_info
 
+
 def get_total_constraints_count_per_node_shape(shapes_graph_uri: str = SHAPES_GRAPH_URI) -> list:
     """
     Calculate the total number of constraints (triples with predicates matching the SHACL features)
@@ -485,7 +487,6 @@ def get_total_constraints_count_per_node_shape(shapes_graph_uri: str = SHAPES_GR
     Returns:
         list: A JSON list where each element contains a Node Shape name and the total number of constraints.
     """
-    
 
     # Build the SPARQL VALUES clause with full URIs for SHACL features
     shacl_features_values = " ".join([f"<{feature}>" for feature in SHACL_FEATURES])
@@ -524,8 +525,8 @@ def get_total_constraints_count_per_node_shape(shapes_graph_uri: str = SHAPES_GR
 
 
 def get_constraints_count_for_property_shapes(
-    nodeshape_name: str,
-    shapes_graph_uri: str = SHAPES_GRAPH_URI
+        nodeshape_name: str,
+        shapes_graph_uri: str = SHAPES_GRAPH_URI
 ) -> list:
     """
     Calculate the constraints count for each Property Shape associated with the given Node Shape
@@ -634,6 +635,7 @@ def get_maximum_number_of_violations_in_validation_report_for_node_shape() -> di
     # If no violations are found, return an empty result
     return {"nodeShape": "", "violationCount": 0}
 
+
 def get_average_number_of_violations_in_validation_report_for_node_shape() -> float:
     """
     Query the Virtuoso SPARQL endpoint to calculate the average number of violations
@@ -694,9 +696,9 @@ def get_average_number_of_violations_in_validation_report_for_node_shape() -> fl
 
 
 def get_distribution_of_violations_per_constraint(
-    shapes_graph_uri: str = SHAPES_GRAPH_URI,
-    validation_report_uri: str = VALIDATION_REPORT_URI,
-    num_bins: int = 10,
+        shapes_graph_uri: str = SHAPES_GRAPH_URI,
+        validation_report_uri: str = VALIDATION_REPORT_URI,
+        num_bins: int = 10,
 ) -> dict:
     """
     Generate data for the "Distribution of Violations per Constraint" plot in a single SPARQL query.
@@ -784,7 +786,7 @@ def get_distribution_of_violations_per_constraint(
             "datasets": [
                 {
                     "label": "Frequency",
-                    "data": [0]*num_bins,
+                    "data": [0] * num_bins,
                 }
             ],
         }
@@ -819,8 +821,8 @@ def calculate_shannon_entropy(violation_counts: dict) -> float:
 
 
 def get_correlation_of_constraints_and_violations(
-    shapes_graph_uri: str = SHAPES_GRAPH_URI,
-    validation_report_uri: str = VALIDATION_REPORT_URI,
+        shapes_graph_uri: str = SHAPES_GRAPH_URI,
+        validation_report_uri: str = VALIDATION_REPORT_URI,
 ) -> list:
     """
     Provide data for a 'Correlation Between Constraints and Violations' plot.
@@ -925,9 +927,8 @@ def get_correlation_of_constraints_and_violations(
     return result_data
 
 
-
-
-def get_node_shape_details_table(limit: int = None, offset: int = None, shapes_graph_uri: str = SHAPES_GRAPH_URI, validation_report_uri: str = VALIDATION_REPORT_URI) -> list:
+def get_node_shape_details_table(limit: int = None, offset: int = None, shapes_graph_uri: str = SHAPES_GRAPH_URI,
+                                 validation_report_uri: str = VALIDATION_REPORT_URI) -> list:
     """
     Generate data for the Node Shape Details table.
 
@@ -1066,10 +1067,8 @@ def get_node_shape_with_most_unique_constraints(validation_report_uri: str = VAL
         return {"nodeShape": None, "uniqueConstraintsCount": 0}
 
 
-
-
 def benchmark_function_execution_2(func, runs=10, csv_filename="execution_time_use_case_2_lkg3_schema2.csv"):
-#def benchmark_function_execution(func, runs=10, csv_filename="execution_time_test.csv"):
+    #def benchmark_function_execution(func, runs=10, csv_filename="execution_time_test.csv"):
     """
     Measures the execution time of a function over multiple runs in milliseconds,
     and saves results to a CSV.
@@ -1093,7 +1092,7 @@ def benchmark_function_execution_2(func, runs=10, csv_filename="execution_time_u
         elapsed_ms = (end_time - start_time) * 1000  # Convert to milliseconds
         execution_times_ms.append(elapsed_ms)
         results.append(result)
-        print(f"Run {i+1}: {elapsed_ms:.2f} ms")
+        print(f"Run {i + 1}: {elapsed_ms:.2f} ms")
 
     average_ms = sum(execution_times_ms) / runs
     print(f"\nAverage execution time: {average_ms:.2f} ms")
@@ -1113,9 +1112,10 @@ def benchmark_function_execution_2(func, runs=10, csv_filename="execution_time_u
         "average_ms": average_ms,
         "results": results
     }
-    
+
+
 def benchmark_function_execution_3(func, runs=10, csv_filename="execution_time_use_case_2_lkg3_schema2.csv"):
-#def benchmark_function_execution(func, runs=10, csv_filename="execution_time_test.csv"):
+    #def benchmark_function_execution(func, runs=10, csv_filename="execution_time_test.csv"):
     """
     Measures the execution time of a function over multiple runs in milliseconds,
     and saves results to a CSV.
@@ -1139,7 +1139,7 @@ def benchmark_function_execution_3(func, runs=10, csv_filename="execution_time_u
         elapsed_ms = (end_time - start_time) * 1000  # Convert to milliseconds
         execution_times_ms.append(elapsed_ms)
         results.append(result)
-        print(f"Run {i+1}: {elapsed_ms:.2f} ms")
+        print(f"Run {i + 1}: {elapsed_ms:.2f} ms")
 
     average_ms = sum(execution_times_ms) / runs
     print(f"\nAverage execution time: {average_ms:.2f} ms")
@@ -1159,11 +1159,14 @@ def benchmark_function_execution_3(func, runs=10, csv_filename="execution_time_u
         "average_ms": average_ms,
         "results": results
     }
+
+
 #print(get_correlation_of_constraints_and_violations())
 # Execution Queries Use Case 2     
 benchmark_function_execution_2(get_correlation_of_constraints_and_violations)
 
 # Execution Queries Use Case 3
-benchmark_function_execution_3(lambda: get_number_of_violations_per_constraint_type_for_property_shape("http://swat.cse.lehigh.edu/onto/univ-bench.owl#CourseShape"))
+benchmark_function_execution_3(lambda: get_number_of_violations_per_constraint_type_for_property_shape(
+    "http://swat.cse.lehigh.edu/onto/univ-bench.owl#CourseShape"))
 
 #print(get_number_of_violations_per_constraint_type_for_property_shape("http://swat.cse.lehigh.edu/onto/univ-bench.owl#CourseShape"))
